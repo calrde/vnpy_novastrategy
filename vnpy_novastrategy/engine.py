@@ -42,7 +42,6 @@ from .base import (
     EVENT_NOVA_STRATEGY
 )
 from .template import StrategyTemplate
-from .table import LiveDataTable
 
 
 class StrategyEngine(BaseEngine):
@@ -186,32 +185,6 @@ class StrategyEngine(BaseEngine):
         else:
             return None
 
-    def get_min_volume(self, strategy: StrategyTemplate, vt_symbol: str) -> float:
-        """Get min volume of a contract"""
-        contract: Optional[ContractData] = self.main_engine.get_contract(vt_symbol)
-
-        if contract:
-            return contract.min_volume
-        else:
-            return None
-
-    def new_table(
-        self,
-        vt_symbols: list[str],
-        size: int,
-        window: int,
-        interval: Interval,
-        extra_fields: list[str]
-    ) -> LiveDataTable:
-        """Create a new DataTable"""
-        return LiveDataTable(
-            vt_symbols=vt_symbols,
-            size=size,
-            window=window,
-            interval=interval,
-            extra_fields=extra_fields,
-        )
-
     def load_bars(self, strategy: StrategyTemplate, days: int, interval: Interval) -> None:
         """Load history bar data for portfolio"""
         vt_symbols: list = strategy.vt_symbols
@@ -260,11 +233,13 @@ class StrategyEngine(BaseEngine):
                 func(params)
             else:
                 func()
-        except Exception:
+        except Exception as e:
             strategy.trading = False
             strategy.inited = False
 
             msg: str = f"Strategy stopped due to exception\n{traceback.format_exc()}"
+            print(e)
+            print(msg)
             self.write_log(msg, strategy)
 
     def add_strategy(
