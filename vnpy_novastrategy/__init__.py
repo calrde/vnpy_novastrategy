@@ -33,12 +33,11 @@ from .base import APP_NAME
 from .engine import StrategyEngine
 from .template import StrategyTemplate, Parameter, Variable
 from .backtesting import BacktestingEngine
-from .table import DataTable, LiveDataTable, BacktestingDataTable
+from .table import DataTable
 from .handler import TickHandler
-from .expression import register_function
 
 
-__version__ = "0.5.0"
+__version__ = "0.3.0"
 
 
 class NovaStrategyApp(BaseApp):
