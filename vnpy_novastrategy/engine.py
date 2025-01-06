@@ -260,11 +260,13 @@ class StrategyEngine(BaseEngine):
                 func(params)
             else:
                 func()
-        except Exception:
+        except Exception as e:
             strategy.trading = False
             strategy.inited = False
 
             msg: str = f"Strategy stopped due to exception\n{traceback.format_exc()}"
+            print(e)
+            print(msg)
             self.write_log(msg, strategy)
 
     def add_strategy(
