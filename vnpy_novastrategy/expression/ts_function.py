@@ -80,7 +80,7 @@ def ts_greater_than(x1: pd.Series, x2: Union[pd.Series, float]) -> pd.Series:
     return (x1 > x2).astype(float)
 
 
-def ts_less_than(x1: pd.Series, x2: pd.Series | float) -> pd.Series:
+def ts_less_than(x1: pd.Series, x2: Union[pd.Series, float]) -> pd.Series:
     """比较X1是否小于等于X2，返回对应的0或者1"""
     x1 = x1.fillna(0)
 
